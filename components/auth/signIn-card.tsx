@@ -27,6 +27,7 @@ import Image from "next/image";
 import { Input } from "../ui/input";
 import { LoginSchema } from "@/types/login-schema";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export default function AuthCard() {
   const [isclicked, setIsClicked] = useState(false);
@@ -34,10 +35,11 @@ export default function AuthCard() {
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof LoginSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -51,9 +53,8 @@ export default function AuthCard() {
         }}
       >
         <DialogTrigger>Open</DialogTrigger>
-        <DialogContent className="w-[640px] h-[560px]   py-[55px] px-[170px] text-center   ">
-          <DialogHeader>
-
+        <DialogContent className="w-[640px]   py-[55px] px-[150px] text-center   ">
+          <DialogHeader className=" flex  justify-center">
             {isclicked === false ? (
               <div className=" flex flex-col gap-[40px] text-center">
                 <h2 className="font-abril text-[32px]">Welcome back.</h2>
@@ -147,8 +148,8 @@ export default function AuthCard() {
               </div>
             ) : (
               <>
-                <div className="flex flex-col gap-[40px] text-center">
-                  <div className="">
+                <div className="flex flex-col gap-[40px] text-center ">
+                  <div className=" flex flex-col gap-[40px]">
                     <div className=" flex flex-col gap-[10px]">
                       <h2 className="font-abril text-[24px]">
                         Sign in with email
@@ -158,33 +159,82 @@ export default function AuthCard() {
                         your account
                       </p>
                     </div>
-                    <div className=" flex flex-col items-center justify-center">
+                    <div className=" font-light ">
                       <Form {...form}>
                         <form
                           onSubmit={form.handleSubmit(onSubmit)}
-                          className="space-y-8"
+                          className=" flex flex-col gap-[35px] justify-center"
                         >
-                          <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Your email</FormLabel>
-                                <FormControl>
-                                  <Input placeholder="shadcn" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <Button type="submit">Submit</Button>
+                          <div className=" flex flex-col gap-[15px]">
+                            <FormField
+                              control={form.control}
+                              name="email"
+                              render={({ field, fieldState }) => (
+                                <FormItem>
+                                  <div className=" flex flex-col items-start gap-2">
+                                    <FormLabel className="font-light text-base">
+                                      Your email
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        placeholder="Enter your email address"
+                                        className={cn(
+                                          "bg-[#E1E1E1]  !text-base h-[43px] rounded-full px-5 !ring-0 focus:!outline-none focus:!border-none focus:!ring-0",
+                                          fieldState.error
+                                            ? " border border-redError  "
+                                            : "border-none"
+                                        )}
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage className="font-light text-sm text-redError" />
+                                  </div>
+                                </FormItem>
+                              )}
+                            />
+                            <FormField
+                              control={form.control}
+                              name="password"
+                              render={({ field, fieldState }) => (
+                                <FormItem>
+                                  <div className=" flex flex-col items-start gap-[10px] ">
+                                    <FormLabel className="font-light text-base">
+                                      Your password
+                                    </FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        placeholder="Enter your password"
+                                        className={cn(
+                                          "bg-[#E1E1E1]  !text-base h-[43px] rounded-full px-5 !ring-0 focus:!outline-none focus:!border-none focus:!ring-0",
+                                          fieldState.error
+                                            ? " border border-redError  "
+                                            : "border-none"
+                                        )}
+                                        {...field}
+                                      />
+                                    </FormControl>
+                                    <FormMessage className="font-light text-sm text-redError" />
+                                  </div>
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+
+                          <div className="">
+                            <button
+                              type="submit"
+                              className="bg-black  text-white w-[117px] h-[41px] rounded-full hover:bg-very_gray transition-colors  ease-in-out duration-200"
+                            >
+                              Continue
+                            </button>{" "}
+                          </div>
                         </form>
                       </Form>
                     </div>
                   </div>
-                  <div className="font-helvetica flex flex-col items-center gap-[35px] ">
+                  <div className=" ">
                     <p
-                      className="font-light cursor-pointer hover:underline"
+                      className="font-light cursor-pointer underline"
                       onClick={() => setIsClicked(false)}
                     >
                       Back to sign up options
@@ -194,7 +244,6 @@ export default function AuthCard() {
               </>
             )}
           </DialogHeader>
-          <DialogClose />
         </DialogContent>
       </Dialog>
     </div>

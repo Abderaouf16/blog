@@ -16,6 +16,7 @@ export default {
   			bananaLight: '#F7F4ED',
   			very_gray: '#495057',
   			blue: '#2563EB',
+			redError: '#C94A4A',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
