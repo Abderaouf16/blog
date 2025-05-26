@@ -29,7 +29,7 @@ import { LoginSchema } from "@/types/login-schema";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
-export default function AuthCard() {
+export default function AuthCardd() {
   const [isclicked, setIsClicked] = useState(false);
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),

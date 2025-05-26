@@ -1,4 +1,4 @@
-import AuthCard from "@/components/auth/signIn-card";
+import AuthCard from "@/components/auth/cards/signin-card/parent-card";
 import LandingPageNav from "@/components/navigation/LandingPage-nav";
 import Image from "next/image";
 
